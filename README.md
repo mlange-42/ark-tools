@@ -81,15 +81,15 @@ type VelocitySystem struct {
 
 // Initialize the system
 func (s *VelocitySystem) Initialize(w *ecs.World) {
-	s.filter = ecs.NewFilter2[Position, Velocity]()
+	s.filter = *ecs.NewFilter2[Position, Velocity](w)
 
 	mapper := ecs.NewMap2[Position, Velocity](w)
-	mapper.NewBatch(s.EntityCount)
+	mapper.NewBatch(s.EntityCount, &Position{}, &Velocity{})
 }
 
 // Update the system
 func (s *VelocitySystem) Update(w *ecs.World) {
-	query := s.filter.Query(w)
+	query := s.filter.Query()
 
 	for query.Next() {
 		pos, vel := query.Get()
