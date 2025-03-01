@@ -23,7 +23,7 @@ It's purpose is to get started with prototyping and developing simulation models
 * Scheduler for running logic and UI systems with independent update rates.
 * Interfaces for ECS systems and observers.
 * Ready-to-use systems for common tasks like writing CSV files or terminating a simulation.
-* Common ECS resources, like central PRNG source or the current model tick.
+* Common ECS resources, like central PRNG source or the current update tick.
 
 ## Installation
 
@@ -40,7 +40,7 @@ See the [API docs](https://pkg.go.dev/github.com/mlange-42/ark-tools) for more d
 package main
 
 import (
-	"github.com/mlange-42/ark-tools/model"
+	"github.com/mlange-42/ark-tools/app"
 	"github.com/mlange-42/ark-tools/system"
 	"github.com/mlange-42/ark/ecs"
 )
@@ -58,18 +58,18 @@ type Velocity struct {
 }
 
 func main() {
-	// Create a new, seeded model.
-	m := model.New().Seed(123)
+	// Create a new, seeded app.
+	app := app.New(1024).Seed(123)
 	// Limit simulation speed
-	m.TPS = 30
+	app.TPS = 30
 
-	// Add systems to the model.
-	m.AddSystem(&VelocitySystem{EntityCount: 1000})
+	// Add systems to the app.
+	app.AddSystem(&VelocitySystem{EntityCount: 1000})
 	// Add a termination system that ends the simulation.
-	m.AddSystem(&system.FixedTermination{Steps: 100})
+	app.AddSystem(&system.FixedTermination{Steps: 100})
 
-	// Run the model.
-	m.Run()
+	// Run the app.
+	app.Run()
 }
 
 // VelocitySystem is an example system adding velocity to position.
