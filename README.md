@@ -45,13 +45,13 @@ import (
 	"github.com/mlange-42/ark/ecs"
 )
 
-// Position component
+// Position component.
 type Position struct {
 	X float64
 	Y float64
 }
 
-// Velocity component
+// Velocity component.
 type Velocity struct {
 	X float64
 	Y float64
@@ -60,7 +60,7 @@ type Velocity struct {
 func main() {
 	// Create a new, seeded app.
 	app := app.New(1024).Seed(123)
-	// Limit simulation speed
+	// Limit simulation speed.
 	app.TPS = 30
 
 	// Add systems to the app.
@@ -79,7 +79,7 @@ type VelocitySystem struct {
 	filter      ecs.Filter2[Position, Velocity]
 }
 
-// Initialize the system
+// Initialize the system.
 func (s *VelocitySystem) Initialize(w *ecs.World) {
 	s.filter = *ecs.NewFilter2[Position, Velocity](w)
 
@@ -87,7 +87,7 @@ func (s *VelocitySystem) Initialize(w *ecs.World) {
 	mapper.NewBatch(s.EntityCount, &Position{}, &Velocity{})
 }
 
-// Update the system
+// Update the system.
 func (s *VelocitySystem) Update(w *ecs.World) {
 	query := s.filter.Query()
 
@@ -98,7 +98,7 @@ func (s *VelocitySystem) Update(w *ecs.World) {
 	}
 }
 
-// Finalize the system
+// Finalize the system.
 func (s *VelocitySystem) Finalize(w *ecs.World) {}
 ```
 
