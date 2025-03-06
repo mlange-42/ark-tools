@@ -17,7 +17,7 @@ func (o *RowObserver) Header() []string {
 }
 
 func (o *RowObserver) Values(w *ecs.World) []float64 {
-	query := w.Unsafe().Query(ecs.NewFilter())
+	query := ecs.NewFilter(w).Query()
 	cnt := query.Count()
 	query.Close()
 

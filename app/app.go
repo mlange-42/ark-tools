@@ -29,9 +29,9 @@ type App struct {
 // New creates a new app.
 //
 // See [ecs.NewWorld] for the arguments.
-func New(initialCapacity uint32) *App {
+func New(initialCapacity ...int) *App {
 	var app = App{
-		World: ecs.NewWorld(initialCapacity),
+		World: ecs.NewWorld(initialCapacity...),
 	}
 	app.FPS = 30
 	app.TPS = 0
