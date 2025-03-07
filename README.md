@@ -7,7 +7,7 @@
 [![GitHub](https://img.shields.io/badge/github-repo-blue?logo=github)](https://github.com/mlange-42/ark-tools)
 [![MIT license](https://img.shields.io/github/license/mlange-42/ark-tools)](https://github.com/mlange-42/ark-tools/blob/main/LICENSE)
 
-Ark Tools provides a wrapper around the [Ark](https://github.com/mlange-42/ark) Entity Component System (ECS), and some common systems and resources.
+*Ark Tools* provides systems, a scheduler, and other useful stuff for the [Ark](https://github.com/mlange-42/ark) Entity Component System (ECS).
 It's purpose is to get started with prototyping and developing simulation models immediately, focussing on the model logic.
 
 <div align="center">
