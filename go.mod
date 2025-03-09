@@ -2,7 +2,7 @@ module github.com/mlange-42/ark-tools
 
 go 1.24.0
 
-require github.com/mlange-42/ark v0.2.1-0.20250306213929-ec5db5ac0054
+require github.com/mlange-42/ark v0.3.0
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
