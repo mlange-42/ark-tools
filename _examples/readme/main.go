@@ -37,12 +37,12 @@ func main() {
 // For simplicity, it also creates entities during initialization.
 type VelocitySystem struct {
 	EntityCount int
-	filter      ecs.Filter2[Position, Velocity]
+	filter      *ecs.Filter2[Position, Velocity]
 }
 
 // Initialize the system.
 func (s *VelocitySystem) Initialize(w *ecs.World) {
-	s.filter = *ecs.NewFilter2[Position, Velocity](w)
+	s.filter = s.filter.New(w)
 
 	mapper := ecs.NewMap2[Position, Velocity](w)
 	mapper.NewBatch(s.EntityCount, &Position{}, &Velocity{})
