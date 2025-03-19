@@ -1,8 +1,10 @@
 # Changelog
 
-## [[v0.1.2]](https://github.com/mlange-42/ark-tools/compare/v0.1.1...v0.1.2)
+## [[v0.1.3]](https://github.com/mlange-42/ark-tools/compare/v0.1.2...v0.1.3)
 
-## Other
+- Upgrade to Ark v0.4.0 (#8, #9)
+
+## [[v0.1.2]](https://github.com/mlange-42/ark-tools/compare/v0.1.1...v0.1.2)
 
 - Upgrade to Ark v0.3.0 (#7)
 
