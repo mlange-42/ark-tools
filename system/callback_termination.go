@@ -12,24 +12,24 @@ import (
 // Expects a resource of type [app.Termination].
 type CallbackTermination struct {
 	Callback func(t int64) bool // The callback. ends the simulation when it returns true.
+	tickRes  ecs.Resource[resource.Tick]
 	termRes  ecs.Resource[resource.Termination]
-	step     int64
 }
 
 // Initialize the system
 func (s *CallbackTermination) Initialize(w *ecs.World) {
+	s.tickRes = ecs.NewResource[resource.Tick](w)
 	s.termRes = ecs.NewResource[resource.Termination](w)
-	s.step = 0
 }
 
 // Update the system
 func (s *CallbackTermination) Update(w *ecs.World) {
-	term := s.termRes.Get()
+	tick := s.tickRes.Get().Tick
 
-	if s.Callback(s.step) {
+	if s.Callback(tick) {
+		term := s.termRes.Get()
 		term.Terminate = true
 	}
-	s.step++
 }
 
 // Finalize the system
