@@ -12,24 +12,24 @@ import (
 // Expects a resource of type [app.Termination].
 type FixedTermination struct {
 	Steps   int64 // Number of simulation ticks to run.
+	tickRes ecs.Resource[resource.Tick]
 	termRes ecs.Resource[resource.Termination]
-	step    int64
 }
 
 // Initialize the system
 func (s *FixedTermination) Initialize(w *ecs.World) {
+	s.tickRes = ecs.NewResource[resource.Tick](w)
 	s.termRes = ecs.NewResource[resource.Termination](w)
-	s.step = 0
 }
 
 // Update the system
 func (s *FixedTermination) Update(w *ecs.World) {
-	term := s.termRes.Get()
+	tick := s.tickRes.Get().Tick
 
-	if s.step+1 >= s.Steps {
+	if tick+1 >= s.Steps {
+		term := s.termRes.Get()
 		term.Terminate = true
 	}
-	s.step++
 }
 
 // Finalize the system
