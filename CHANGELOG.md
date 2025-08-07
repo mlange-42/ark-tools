@@ -1,5 +1,9 @@
 # Changelog
 
+## [[v0.1.5]](https://github.com/mlange-42/ark-tools/compare/v0.1.4...v0.1.5)
+
+- The source field of the PRNG resource `Rand` is ignored during JSON (de)-serialization (#11)
+
 ## [[v0.1.4]](https://github.com/mlange-42/ark-tools/compare/v0.1.3...v0.1.4)
 
 - Termination systems use the `Tick` resource instead of an internal counter (#10)

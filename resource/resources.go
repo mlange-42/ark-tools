@@ -10,10 +10,11 @@ import (
 //
 // This resource is provided by [github.com/mlange-42/ark-tools/app.App] per default.
 type Rand struct {
-	rand.Source // Source to use for PRNGs in [System] implementations.
+	rand.Source `json:"-"` // Source to use for PRNGs in [System] implementations.
 }
 
 // Tick is a resource holding the app's time step.
+// The tick value should not be modified by user code, as it is managed by the scheduler.
 //
 // This resource is provided by [github.com/mlange-42/ark-tools/app.App] per default.
 type Tick struct {
