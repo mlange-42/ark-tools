@@ -19,6 +19,7 @@ type SnapshotCSV struct {
 	FilePattern    string         // File path and pattern for output files, like out/foo-%06d.csv
 	Sep            string         // Column separator. Default ",".
 	UpdateInterval int            // Update interval in model ticks.
+	Final          bool           // Whether Callback should be called on finalization only, instead of on every tick.
 	header         []string
 	builder        strings.Builder
 	step           int64
@@ -47,36 +48,8 @@ func (s *SnapshotCSV) Initialize(w *ecs.World) {
 // Update the system
 func (s *SnapshotCSV) Update(w *ecs.World) {
 	s.Observer.Update(w)
-	if s.UpdateInterval == 0 || s.step%int64(s.UpdateInterval) == 0 {
-		file, err := os.Create(fmt.Sprintf(s.FilePattern, s.step))
-		if err != nil {
-			panic(err)
-		}
-		defer func() {
-			err := file.Close()
-			if err != nil {
-				panic(err)
-			}
-		}()
-
-		_, err = fmt.Fprintf(file, "%s\n", strings.Join(s.header, s.Sep))
-		if err != nil {
-			panic(err)
-		}
-
-		values := s.Observer.Values(w)
-		s.builder.Reset()
-		for _, row := range values {
-			for i, v := range row {
-				fmt.Fprint(&s.builder, strconv.FormatFloat(v, 'f', -1, 64))
-				if i < len(row)-1 {
-					fmt.Fprint(&s.builder, s.Sep)
-				}
-			}
-			fmt.Fprint(&s.builder, "\n")
-		}
-		_, err = fmt.Fprint(file, s.builder.String())
-		if err != nil {
+	if !s.Final && (s.UpdateInterval == 0 || s.step%int64(s.UpdateInterval) == 0) {
+		if err := s.writeToFile(w); err != nil {
 			panic(err)
 		}
 	}
@@ -84,4 +57,56 @@ func (s *SnapshotCSV) Update(w *ecs.World) {
 }
 
 // Finalize the system
-func (s *SnapshotCSV) Finalize(w *ecs.World) {}
+func (s *SnapshotCSV) Finalize(w *ecs.World) {
+	if !s.Final {
+		return
+	}
+	if err := s.writeToFile(w); err != nil {
+		panic(err)
+	}
+}
+
+func (s *SnapshotCSV) writeToFile(w *ecs.World) error {
+	file, err := os.Create(s.createFileName())
+	if err != nil {
+		return err
+	}
+	defer func() {
+		err := file.Close()
+		if err != nil {
+			panic(err)
+		}
+	}()
+
+	_, err = fmt.Fprintf(file, "%s\n", strings.Join(s.header, s.Sep))
+	if err != nil {
+		return err
+	}
+
+	values := s.Observer.Values(w)
+	s.builder.Reset()
+	for _, row := range values {
+		for i, v := range row {
+			fmt.Fprint(&s.builder, strconv.FormatFloat(v, 'f', -1, 64))
+			if i < len(row)-1 {
+				fmt.Fprint(&s.builder, s.Sep)
+			}
+		}
+		fmt.Fprint(&s.builder, "\n")
+	}
+	_, err = fmt.Fprint(file, s.builder.String())
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *SnapshotCSV) createFileName() string {
+	var filename string
+	if strings.Contains(s.FilePattern, "%") {
+		filename = fmt.Sprintf(s.FilePattern, s.step)
+	} else {
+		filename = s.FilePattern
+	}
+	return filename
+}

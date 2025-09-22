@@ -19,6 +19,7 @@ type CSV struct {
 	File           string       // Path to the output file.
 	Sep            string       // Column separator. Default ",".
 	UpdateInterval int          // Update interval in model ticks.
+	Final          bool         // Whether Callback should be called on finalization only, instead of on every tick.
 	file           *os.File
 	header         []string
 	builder        strings.Builder
@@ -56,18 +57,8 @@ func (s *CSV) Initialize(w *ecs.World) {
 // Update the system
 func (s *CSV) Update(w *ecs.World) {
 	s.Observer.Update(w)
-	if s.UpdateInterval == 0 || s.step%int64(s.UpdateInterval) == 0 {
-		values := s.Observer.Values(w)
-		s.builder.Reset()
-		fmt.Fprintf(&s.builder, "%d%s", s.step, s.Sep)
-		for i, v := range values {
-			fmt.Fprint(&s.builder, strconv.FormatFloat(v, 'f', -1, 64))
-			if i < len(values)-1 {
-				fmt.Fprint(&s.builder, s.Sep)
-			}
-		}
-		_, err := fmt.Fprintf(s.file, "%s\n", s.builder.String())
-		if err != nil {
+	if !s.Final && (s.UpdateInterval == 0 || s.step%int64(s.UpdateInterval) == 0) {
+		if err := s.writeToFile(w); err != nil {
 			panic(err)
 		}
 	}
@@ -76,7 +67,29 @@ func (s *CSV) Update(w *ecs.World) {
 
 // Finalize the system
 func (s *CSV) Finalize(w *ecs.World) {
+	if s.Final {
+		if err := s.writeToFile(w); err != nil {
+			panic(err)
+		}
+	}
 	if err := s.file.Close(); err != nil {
 		panic(err)
 	}
+}
+
+func (s *CSV) writeToFile(w *ecs.World) error {
+	values := s.Observer.Values(w)
+	s.builder.Reset()
+	fmt.Fprintf(&s.builder, "%d%s", s.step, s.Sep)
+	for i, v := range values {
+		fmt.Fprint(&s.builder, strconv.FormatFloat(v, 'f', -1, 64))
+		if i < len(values)-1 {
+			fmt.Fprint(&s.builder, s.Sep)
+		}
+	}
+	_, err := fmt.Fprintf(s.file, "%s\n", s.builder.String())
+	if err != nil {
+		return err
+	}
+	return nil
 }
