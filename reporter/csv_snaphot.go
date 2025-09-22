@@ -67,7 +67,7 @@ func (s *SnapshotCSV) Finalize(w *ecs.World) {
 }
 
 func (s *SnapshotCSV) writeToFile(w *ecs.World) error {
-	file, err := os.Create(fmt.Sprintf(s.FilePattern, s.step))
+	file, err := os.Create(s.createFileName())
 	if err != nil {
 		return err
 	}
@@ -99,4 +99,14 @@ func (s *SnapshotCSV) writeToFile(w *ecs.World) error {
 		return err
 	}
 	return nil
+}
+
+func (s *SnapshotCSV) createFileName() string {
+	var filename string
+	if strings.Contains(s.FilePattern, "%") {
+		filename = fmt.Sprintf(s.FilePattern, s.step)
+	} else {
+		filename = s.FilePattern
+	}
+	return filename
 }
