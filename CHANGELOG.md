@@ -2,7 +2,7 @@
 
 ## [[v0.2.0]](https://github.com/mlange-42/ark-tools/compare/v0.1.5...v0.2.0)
 
-- Adds option `Final` to CSV observers, to write output only during finalization (#13)
+- Adds option `Final` to CSV reporters, to write output only during finalization (#13)
 
 ## [[v0.1.5]](https://github.com/mlange-42/ark-tools/compare/v0.1.4...v0.1.5)
 
