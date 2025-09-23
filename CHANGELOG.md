@@ -1,5 +1,9 @@
 # Changelog
 
+## [[v0.2.1]](https://github.com/mlange-42/ark-tools/compare/v0.2.0...v0.2.1)
+
+- Improves performance of CSV reporters by buffering output (#14)
+
 ## [[v0.2.0]](https://github.com/mlange-42/ark-tools/compare/v0.1.5...v0.2.0)
 
 - Adds option `Final` to CSV reporters, to write output only during finalization (#13)

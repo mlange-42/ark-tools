@@ -1,6 +1,7 @@
 package reporter
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -21,6 +22,7 @@ type CSV struct {
 	UpdateInterval int          // Update interval in model ticks.
 	Final          bool         // Whether Callback should be called on finalization only, instead of on every tick.
 	file           *os.File
+	writer         *bufio.Writer
 	header         []string
 	builder        strings.Builder
 	step           int64
@@ -46,7 +48,8 @@ func (s *CSV) Initialize(w *ecs.World) {
 	if err != nil {
 		panic(err)
 	}
-	_, err = fmt.Fprintf(s.file, "t%s%s\n", s.Sep, strings.Join(s.header, s.Sep))
+	s.writer = bufio.NewWriterSize(s.file, 4096)
+	_, err = fmt.Fprintf(s.writer, "t%s%s\n", s.Sep, strings.Join(s.header, s.Sep))
 	if err != nil {
 		panic(err)
 	}
@@ -72,6 +75,9 @@ func (s *CSV) Finalize(w *ecs.World) {
 			panic(err)
 		}
 	}
+	if err := s.writer.Flush(); err != nil {
+		panic(err)
+	}
 	if err := s.file.Close(); err != nil {
 		panic(err)
 	}
@@ -87,7 +93,7 @@ func (s *CSV) writeToFile(w *ecs.World) error {
 			fmt.Fprint(&s.builder, s.Sep)
 		}
 	}
-	_, err := fmt.Fprintf(s.file, "%s\n", s.builder.String())
+	_, err := fmt.Fprintf(s.writer, "%s\n", s.builder.String())
 	if err != nil {
 		return err
 	}
