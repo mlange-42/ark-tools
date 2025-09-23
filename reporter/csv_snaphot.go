@@ -1,6 +1,7 @@
 package reporter
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -78,7 +79,9 @@ func (s *SnapshotCSV) writeToFile(w *ecs.World) error {
 		}
 	}()
 
-	_, err = fmt.Fprintf(file, "%s\n", strings.Join(s.header, s.Sep))
+	writer := bufio.NewWriterSize(file, 4096)
+
+	_, err = fmt.Fprintf(writer, "%s\n", strings.Join(s.header, s.Sep))
 	if err != nil {
 		return err
 	}
@@ -94,11 +97,11 @@ func (s *SnapshotCSV) writeToFile(w *ecs.World) error {
 		}
 		fmt.Fprint(&s.builder, "\n")
 	}
-	_, err = fmt.Fprint(file, s.builder.String())
+	_, err = fmt.Fprint(writer, s.builder.String())
 	if err != nil {
 		return err
 	}
-	return nil
+	return writer.Flush()
 }
 
 func (s *SnapshotCSV) createFileName() string {
