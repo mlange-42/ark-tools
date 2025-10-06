@@ -36,9 +36,14 @@ func ExampleSystem() {
 	app.AddSystem(&TestSystem{})
 
 	// Add a termination system that ends the simulation.
-	app.AddSystem(&system.FixedTermination{Steps: 30})
+	app.AddSystem(&system.FixedTermination{Steps: 5})
 
 	// Run the simulation.
 	app.Run()
 	// Output:
+	// 0
+	// 1
+	// 2
+	// 3
+	// 4
 }
