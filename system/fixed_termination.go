@@ -23,7 +23,7 @@ func (s *FixedTermination) Initialize(w *ecs.World) {
 }
 
 // Update the system
-func (s *FixedTermination) Update(w *ecs.World) {
+func (s *FixedTermination) Update(_ *ecs.World) {
 	tick := s.tickRes.Get().Tick
 
 	if tick+1 >= s.Steps {
@@ -33,4 +33,4 @@ func (s *FixedTermination) Update(w *ecs.World) {
 }
 
 // Finalize the system
-func (s *FixedTermination) Finalize(w *ecs.World) {}
+func (s *FixedTermination) Finalize(_ *ecs.World) {}
