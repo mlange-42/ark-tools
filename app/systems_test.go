@@ -43,7 +43,7 @@ func TestSystems(t *testing.T) {
 		})
 
 		assert.Equal(t, app.systems, app.Systems.Systems())
-		assert.Equal(t, app.uiSystems, app.Systems.UISystems())
+		assert.Equal(t, app.uiSystems, app.UISystems())
 
 		assert.Panics(t, func() { app.RemoveSystem(&dualSys) })
 

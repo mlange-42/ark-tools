@@ -39,7 +39,7 @@ func TestMatrixToGrid(t *testing.T) {
 	app := app.New(1024)
 
 	var mat observer.Matrix = &matObs{}
-	var grid observer.Grid = observer.MatrixToGrid(
+	grid := observer.MatrixToGrid(
 		mat,
 		&[...]float64{1, 2},
 		&[...]float64{5, 10},

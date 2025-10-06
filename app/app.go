@@ -35,7 +35,7 @@ func New(initialCapacity ...int) *App {
 	}
 	app.FPS = 30
 	app.TPS = 0
-	app.Systems.world = &app.World
+	app.world = &app.World
 
 	app.rand = resource.Rand{
 		Source: rand.NewPCG(0, uint64(time.Now().UnixNano())),
@@ -77,12 +77,12 @@ func (app *App) Seed(seed ...uint64) *App {
 // To perform updates manually, see [App.Update] and [App.UpdateUI],
 // as well as [App.Initialize] and [App.Finalize].
 func (app *App) Run() {
-	app.Systems.run()
+	app.run()
 }
 
 // Initialize the app.
 func (app *App) Initialize() {
-	app.Systems.initialize()
+	app.initialize()
 }
 
 // Update the app's systems.
@@ -92,7 +92,7 @@ func (app *App) Initialize() {
 //
 // Panics if [App.Initialize] was not called.
 func (app *App) Update() bool {
-	return app.Systems.updateSystems()
+	return app.updateSystems()
 }
 
 // UpdateUI the app's UI systems.
@@ -101,12 +101,12 @@ func (app *App) Update() bool {
 //
 // Panics if [App.Initialize] was not called.
 func (app *App) UpdateUI() {
-	app.Systems.updateUISystems()
+	app.updateUISystems()
 }
 
 // Finalize the app.
 func (app *App) Finalize() {
-	app.Systems.finalize()
+	app.finalize()
 }
 
 // Reset resets the world and removes all systems.
@@ -115,7 +115,7 @@ func (app *App) Finalize() {
 // Accelerates re-populating the world by a factor of 2-3.
 func (app *App) Reset() {
 	app.World.Reset()
-	app.Systems.reset()
+	app.reset()
 
 	app.rand = resource.Rand{
 		Source: rand.NewPCG(0, uint64(time.Now().UnixNano())),
