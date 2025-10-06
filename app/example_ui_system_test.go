@@ -34,13 +34,20 @@ func (s *TestUISystem) FinalizeUI(w *ecs.World) {}
 func ExampleUISystem() {
 	// Create a new model.
 	app := app.New(1024)
+	app.TPS = 30
 
 	// Add the test ui system.
 	app.AddUISystem(&TestUISystem{})
 
 	// Add a termination system that ends the simulation.
-	app.AddSystem(&system.FixedTermination{Steps: 30})
+	app.AddSystem(&system.FixedTermination{Steps: 5})
 
 	// Run the simulation.
 	app.Run()
+	// Output:
+	// 0
+	// 1
+	// 2
+	// 3
+	// 4
 }

@@ -16,12 +16,12 @@ type PerfTimer struct {
 }
 
 // Initialize the system
-func (s *PerfTimer) Initialize(w *ecs.World) {
+func (s *PerfTimer) Initialize(_ *ecs.World) {
 	s.step = 0
 }
 
 // Update the system
-func (s *PerfTimer) Update(w *ecs.World) {
+func (s *PerfTimer) Update(_ *ecs.World) {
 	t := time.Now()
 	if s.step == 0 {
 		s.start = t
@@ -39,7 +39,7 @@ func (s *PerfTimer) Update(w *ecs.World) {
 }
 
 // Finalize the system
-func (s *PerfTimer) Finalize(w *ecs.World) {
+func (s *PerfTimer) Finalize(_ *ecs.World) {
 	t := time.Now()
 	dur := t.Sub(s.startSim)
 	usec := float64(dur.Microseconds()) / float64(s.step)

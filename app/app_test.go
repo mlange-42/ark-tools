@@ -13,7 +13,7 @@ import (
 func TestApp(t *testing.T) {
 	app := app.New(1024)
 
-	for i := 0; i < 3; i++ {
+	for range 3 {
 		app.Reset()
 		app.Seed(123)
 
@@ -28,7 +28,7 @@ func TestApp(t *testing.T) {
 func TestAppStep(t *testing.T) {
 	app := app.New(1024)
 
-	for i := 0; i < 3; i++ {
+	for range 3 {
 		app.Reset()
 		app.Seed(123)
 
@@ -105,7 +105,7 @@ func ExampleApp_Reset() {
 	app := app.New(1024)
 
 	// Do many simulations.
-	for i := 0; i < 10; i++ {
+	for i := range 10 {
 		// Reset the app to clear entities, systems etc. before the run.
 		app.Reset()
 

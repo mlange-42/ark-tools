@@ -23,7 +23,7 @@ func (s *CallbackTermination) Initialize(w *ecs.World) {
 }
 
 // Update the system
-func (s *CallbackTermination) Update(w *ecs.World) {
+func (s *CallbackTermination) Update(_ *ecs.World) {
 	tick := s.tickRes.Get().Tick
 
 	if s.Callback(tick) {
@@ -33,4 +33,4 @@ func (s *CallbackTermination) Update(w *ecs.World) {
 }
 
 // Finalize the system
-func (s *CallbackTermination) Finalize(w *ecs.World) {}
+func (s *CallbackTermination) Finalize(_ *ecs.World) {}

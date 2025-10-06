@@ -15,7 +15,7 @@ func TestMatrixToLayers(t *testing.T) {
 	var mat2 observer.Matrix = &matObs{}
 	var mat3 observer.Matrix = &matObs{}
 
-	var layers observer.MatrixLayers = observer.MatrixToLayers(mat1, mat2, mat3)
+	layers := observer.MatrixToLayers(mat1, mat2, mat3)
 
 	layers.Initialize(&app.World)
 	layers.Update(&app.World)
@@ -36,10 +36,10 @@ func TestMatrixToLayersFail(t *testing.T) {
 	app := app.New(1024)
 
 	var mat1 observer.Matrix = &matObs{}
-	var mat2 *matObs = &matObs{}
+	mat2 := &matObs{}
 	mat2.Rows = 15
 
-	var layers observer.MatrixLayers = observer.MatrixToLayers(mat1, mat2)
+	layers := observer.MatrixToLayers(mat1, mat2)
 	assert.Panics(t, func() { layers.Initialize(&app.World) })
 
 	assert.Panics(t, func() { observer.MatrixToLayers() })

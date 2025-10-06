@@ -36,4 +36,4 @@ func (s *Print) Update(w *ecs.World) {
 }
 
 // Finalize the system
-func (s *Print) Finalize(w *ecs.World) {}
+func (s *Print) Finalize(_ *ecs.World) {}

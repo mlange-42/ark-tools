@@ -11,7 +11,7 @@ import (
 
 func TestSystems(t *testing.T) {
 	app := New(1024)
-	for i := 0; i < 3; i++ {
+	for range 3 {
 		app.Reset()
 
 		app.Seed()
@@ -43,7 +43,7 @@ func TestSystems(t *testing.T) {
 		})
 
 		assert.Equal(t, app.systems, app.Systems.Systems())
-		assert.Equal(t, app.uiSystems, app.Systems.UISystems())
+		assert.Equal(t, app.uiSystems, app.UISystems())
 
 		assert.Panics(t, func() { app.RemoveSystem(&dualSys) })
 

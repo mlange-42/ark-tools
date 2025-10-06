@@ -11,5 +11,7 @@ import "syscall"
 func initTimer() {
 	winmmDLL := syscall.NewLazyDLL("winmm.dll")
 	procTimeBeginPeriod := winmmDLL.NewProc("timeBeginPeriod")
-	procTimeBeginPeriod.Call(uintptr(1))
+	if _, _, err := procTimeBeginPeriod.Call(uintptr(1)); err != syscall.Errno(0) {
+		panic(err)
+	}
 }

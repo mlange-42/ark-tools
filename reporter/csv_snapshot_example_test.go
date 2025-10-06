@@ -23,6 +23,7 @@ func ExampleSnapshotCSV() {
 
 	// Run the simulation.
 	app.Run()
+	// Output:
 }
 
 // ExampleSnapshotObserver to generate some simple tables.
