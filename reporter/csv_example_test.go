@@ -23,6 +23,7 @@ func ExampleCSV() {
 
 	// Run the simulation.
 	app.Run()
+	// Output:
 }
 
 // ExampleObserver to generate some simple time series.

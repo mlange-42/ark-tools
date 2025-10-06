@@ -40,4 +40,5 @@ func ExampleSystem() {
 
 	// Run the simulation.
 	app.Run()
+	// Output:
 }

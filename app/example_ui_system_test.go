@@ -43,4 +43,5 @@ func ExampleUISystem() {
 
 	// Run the simulation.
 	app.Run()
+	// Output:
 }

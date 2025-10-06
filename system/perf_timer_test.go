@@ -25,5 +25,6 @@ func ExamplePerfTimer() {
 	// Uncomment the next line.
 
 	// m.Run()
+
 	// Output:
 }
