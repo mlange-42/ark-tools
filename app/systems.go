@@ -148,7 +148,7 @@ func (s *Systems) removeSystem(sys System) {
 		panic("can't remove a system in locked state")
 	}
 	idx := -1
-	for i := 0; i < len(s.systems); i++ {
+	for i := range s.systems {
 		if sys == s.systems[i] {
 			idx = i
 			break
@@ -166,7 +166,7 @@ func (s *Systems) removeUISystem(sys UISystem) {
 		panic("can't remove a system in locked state")
 	}
 	idx := -1
-	for i := 0; i < len(s.uiSystems); i++ {
+	for i := range s.uiSystems {
 		if sys == s.uiSystems[i] {
 			idx = i
 			break

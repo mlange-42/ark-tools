@@ -11,7 +11,7 @@ import (
 
 func TestSystems(t *testing.T) {
 	app := New(1024)
-	for i := 0; i < 3; i++ {
+	for range 3 {
 		app.Reset()
 
 		app.Seed()
