@@ -21,7 +21,7 @@ func TestCallbackTermination(t *testing.T) {
 
 	app.Run()
 
-	time := ecs.GetResource[resource.Tick](&app.World)
+	time := ecs.GetResource[resource.Tick](app.World)
 	assert.Equal(t, 100, int(time.Tick))
 }
 

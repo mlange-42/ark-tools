@@ -17,8 +17,8 @@ func TestMatrixToLayers(t *testing.T) {
 
 	layers := observer.MatrixToLayers(mat1, mat2, mat3)
 
-	layers.Initialize(&app.World)
-	layers.Update(&app.World)
+	layers.Initialize(app.World)
+	layers.Update(app.World)
 
 	assert.Equal(t, 3, layers.Layers())
 
@@ -27,7 +27,7 @@ func TestMatrixToLayers(t *testing.T) {
 	assert.Equal(t, 30, w)
 	assert.Equal(t, 20, h)
 
-	data := layers.Values(&app.World)
+	data := layers.Values(app.World)
 	assert.Equal(t, 3, len(data))
 	assert.Equal(t, 20*30, len(data[0]))
 }
@@ -40,7 +40,7 @@ func TestMatrixToLayersFail(t *testing.T) {
 	mat2.Rows = 15
 
 	layers := observer.MatrixToLayers(mat1, mat2)
-	assert.Panics(t, func() { layers.Initialize(&app.World) })
+	assert.Panics(t, func() { layers.Initialize(app.World) })
 
 	assert.Panics(t, func() { observer.MatrixToLayers() })
 }
