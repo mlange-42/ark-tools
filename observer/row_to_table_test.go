@@ -36,12 +36,12 @@ func TestRowToTable(t *testing.T) {
 
 	table := observer.RowToTable(row)
 
-	table.Initialize(&app.World)
-	table.Update(&app.World)
+	table.Initialize(app.World)
+	table.Update(app.World)
 
 	h := table.Header()
 	assert.Equal(t, []string{"A", "B"}, h)
 
-	v := table.Values(&app.World)
+	v := table.Values(app.World)
 	assert.Equal(t, [][]float64{{1, 2}}, v)
 }

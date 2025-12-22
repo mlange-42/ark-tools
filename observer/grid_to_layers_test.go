@@ -21,8 +21,8 @@ func TestGridToLayers(t *testing.T) {
 
 	layers := observer.GridToLayers(grid1, grid2, grid3)
 
-	layers.Initialize(&app.World)
-	layers.Update(&app.World)
+	layers.Initialize(app.World)
+	layers.Update(app.World)
 
 	assert.Equal(t, 3, layers.Layers())
 
@@ -34,7 +34,7 @@ func TestGridToLayers(t *testing.T) {
 	assert.Equal(t, 1.0, layers.X(1))
 	assert.Equal(t, 1.0, layers.Y(1))
 
-	data := layers.Values(&app.World)
+	data := layers.Values(app.World)
 	assert.Equal(t, 3, len(data))
 	assert.Equal(t, 20*30, len(data[0]))
 }
@@ -50,7 +50,7 @@ func TestGridToLayersFail(t *testing.T) {
 	grid2 := observer.MatrixToGrid(mat2, nil, nil)
 
 	layers := observer.GridToLayers(grid1, grid2)
-	assert.Panics(t, func() { layers.Initialize(&app.World) })
+	assert.Panics(t, func() { layers.Initialize(app.World) })
 
 	assert.Panics(t, func() { observer.GridToLayers() })
 }

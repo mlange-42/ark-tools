@@ -24,7 +24,7 @@ func ExampleSystems() {
 	myApp.AddSystem(&sys)
 
 	// Inside systems, [Systems] can be accessed as a resource.
-	systems := ecs.GetResource[app.Systems](&myApp.World)
+	systems := ecs.GetResource[app.Systems](myApp.World)
 
 	// Pause the simulation, e.g. based on user input.
 	systems.Paused = true

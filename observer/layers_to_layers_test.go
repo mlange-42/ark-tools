@@ -19,8 +19,8 @@ func TestLayersToGrid(t *testing.T) {
 
 	grid := observer.LayersToLayers(layers, &[2]float64{0, 0}, &[2]float64{1, 1})
 
-	grid.Initialize(&app.World)
-	grid.Update(&app.World)
+	grid.Initialize(app.World)
+	grid.Update(app.World)
 
 	assert.Equal(t, 3, grid.Layers())
 
@@ -32,7 +32,7 @@ func TestLayersToGrid(t *testing.T) {
 	assert.Equal(t, 1.0, grid.X(1))
 	assert.Equal(t, 1.0, grid.Y(1))
 
-	data := grid.Values(&app.World)
+	data := grid.Values(app.World)
 	assert.Equal(t, 3, len(data))
 	assert.Equal(t, 20*30, len(data[0]))
 }

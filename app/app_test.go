@@ -56,7 +56,7 @@ func TestAppSeed(t *testing.T) {
 	app := app.New(1024)
 	app.Seed(123)
 
-	rand := ecs.GetResource[resource.Rand](&app.World)
+	rand := ecs.GetResource[resource.Rand](app.World)
 	r1 := rand.Uint64()
 
 	app.Seed(123)

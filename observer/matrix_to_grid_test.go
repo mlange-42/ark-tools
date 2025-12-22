@@ -45,10 +45,10 @@ func TestMatrixToGrid(t *testing.T) {
 		&[...]float64{5, 10},
 	)
 
-	grid.Initialize(&app.World)
-	grid.Update(&app.World)
+	grid.Initialize(app.World)
+	grid.Update(app.World)
 
-	v := grid.Values(&app.World)
+	v := grid.Values(app.World)
 	assert.Equal(t, make([]float64, 20*30), v)
 
 	w, h := grid.Dims()
@@ -62,10 +62,10 @@ func TestMatrixToGrid(t *testing.T) {
 	assert.Equal(t, 12.0, grid.Y(1))
 
 	grid = observer.MatrixToGrid(mat, nil, nil)
-	grid.Initialize(&app.World)
+	grid.Initialize(app.World)
 	assert.Equal(t, 1.0, grid.X(1))
 	assert.Equal(t, 1.0, grid.Y(1))
 
-	data := grid.Values(&app.World)
+	data := grid.Values(app.World)
 	assert.Equal(t, 20*30, len(data))
 }

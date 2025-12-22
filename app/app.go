@@ -19,8 +19,8 @@ import (
 // The [Systems] scheduler, the app's [resource.Tick], [resource.Termination]
 // and a central [resource.Rand] PRNG source can be accessed by systems as resources.
 type App struct {
-	Systems             // Systems manager and scheduler
-	World     ecs.World // The ECS world
+	Systems              // Systems manager and scheduler
+	World     *ecs.World // The ECS world
 	rand      resource.Rand
 	time      resource.Tick
 	terminate resource.Termination
@@ -35,18 +35,18 @@ func New(initialCapacity ...int) *App {
 	}
 	app.FPS = 30
 	app.TPS = 0
-	app.world = &app.World
+	app.world = app.World
 
 	app.rand = resource.Rand{
 		Source: rand.NewPCG(0, uint64(time.Now().UnixNano())),
 	}
-	ecs.AddResource(&app.World, &app.rand)
+	ecs.AddResource(app.World, &app.rand)
 	app.time = resource.Tick{}
-	ecs.AddResource(&app.World, &app.time)
+	ecs.AddResource(app.World, &app.time)
 	app.terminate = resource.Termination{}
-	ecs.AddResource(&app.World, &app.terminate)
+	ecs.AddResource(app.World, &app.terminate)
 
-	ecs.AddResource(&app.World, &app.Systems)
+	ecs.AddResource(app.World, &app.Systems)
 
 	return &app
 }
@@ -120,11 +120,11 @@ func (app *App) Reset() {
 	app.rand = resource.Rand{
 		Source: rand.NewPCG(0, uint64(time.Now().UnixNano())),
 	}
-	ecs.AddResource(&app.World, &app.rand)
+	ecs.AddResource(app.World, &app.rand)
 	app.time = resource.Tick{}
-	ecs.AddResource(&app.World, &app.time)
+	ecs.AddResource(app.World, &app.time)
 	app.terminate = resource.Termination{}
-	ecs.AddResource(&app.World, &app.terminate)
+	ecs.AddResource(app.World, &app.terminate)
 
-	ecs.AddResource(&app.World, &app.Systems)
+	ecs.AddResource(app.World, &app.Systems)
 }
