@@ -1,8 +1,12 @@
 # Changelog
 
+## [[v0.3.1]](https://github.com/mlange-42/ark-tools/compare/v0.3.0...v0.3.1)
+
+- Upgrades to Ark v0.8.0 (#19)
+
 ## [[v0.3.0]](https://github.com/mlange-42/ark-tools/compare/v0.2.1...v0.3.0)
 
-## Breaking changes
+### Breaking changes
 
 - v0.3.0 requires Ark v0.7.0 or newer. It is not compatible with Ark v0.6.x (#17)
 
